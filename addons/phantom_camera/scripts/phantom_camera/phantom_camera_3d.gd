@@ -2457,6 +2457,33 @@ func get_margin() -> float:
 	return margin
 
 
+## Adds a [Node3D] by [CollisionObject3D] that should collide with in [enum FollowMode.THIRD_PERSON].
+func add_exception(value: CollisionObject3D) -> void:
+	_third_person_excluded_objets.append(value)
+
+## Adds a [Node3D] by [RID] that should collide with in [enum FollowMode.THIRD_PERSON].
+func add_exception_rid(value: RID) -> void:
+	_third_person_excluded_objets.append(value)
+
+
+## Excludes a [Node3D] by [CollisionObject3D] from being collided with in [enum FollowMode.THIRD_PERSON].
+func remove_exception(value: CollisionObject3D) -> void:
+	_third_person_excluded_objets.erase(value)
+
+## Excludes a [Node3D] by [RID] from being collided with in [enum FollowMode.THIRD_PERSON].
+func remove_exception_rid(value: RID) -> void:
+	_third_person_excluded_objets.erase(value)
+
+
+## Clears all [Node3D]s from being collided with in [enum FollowMode.THIRD_PERSON].
+func clear_exceptions(include_follow_target: bool = false) -> void:
+	if include_follow_target:
+		_third_person_excluded_objets.clear()
+	else:
+		_third_person_excluded_objets.clear()
+		_third_person_excluded_objets.append(follow_target)
+
+
 func set_draw_follow_line(value: bool) -> void:
 	draw_follow_line = value
 	_draw_follow_gizmo_line = value
