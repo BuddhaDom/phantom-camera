@@ -1124,6 +1124,12 @@ func _process(delta: float) -> void:
 	process_logic(delta)
 
 
+func _notification(what: int) -> void:
+	match(what):
+		NOTIFICATION_EDITOR_PRE_SAVE:
+			if up_target and !up_target.is_inside_tree():
+				up_target = null
+
 
 func process_logic(delta: float) -> void:
 	if _is_active:
@@ -1827,13 +1833,7 @@ func _look_at_target_tree_exiting(target: Node) -> void:
 
 
 func _up_target_tree_exiting() -> void:
-	# This check prevents accidental [up_target] invalidation.
-	# Unlike comparing the owner to [get_tree().edited_scene_root], this approach returns [true] 
-	# when the [up_target] exits the tree while in the same scene, and [false] if the edited scene 
-	# has changed in the process, like when closing the owner scene or changing to another one in editor.
-	if not Engine.is_editor_hint() or \
-	Engine.get_singleton(&"EditorInterface").get_edited_scene_root() == owner: 
-		up_target = null
+	_has_up_target = false
 
 
 func _should_look_at_checker() -> void:
