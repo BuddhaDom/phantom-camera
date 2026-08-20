@@ -1124,7 +1124,6 @@ func _process(delta: float) -> void:
 	process_logic(delta)
 
 
-
 func process_logic(delta: float) -> void:
 	if _is_active:
 		if _has_noise_resource and _preview_noise:
@@ -1324,28 +1323,6 @@ func _set_follow_position(delta: float) -> void:
 						_follow_target_position = global_position
 						_current_rotation = global_rotation
 						return
-			else:
-				_follow_target_output_position = target_position + transform.basis.z * follow_distance
-				var unprojected_position: Vector2 = _get_raw_unprojected_position()
-				var viewport_width: float = get_viewport().size.x
-				var viewport_height: float = get_viewport().size.y
-				var camera_aspect: int = get_viewport().get_camera_3d().keep_aspect
-				var visible_rect_size: Vector2 = get_viewport().get_visible_rect().size
-
-				unprojected_position = unprojected_position - visible_rect_size / 2
-				if camera_aspect == Camera3D.KEEP_HEIGHT:
-					# Landscape View
-					var aspect_ratio_scale: float = viewport_width / viewport_height
-					unprojected_position.x = (unprojected_position.x / aspect_ratio_scale + 1) / 2
-					unprojected_position.y = (unprojected_position.y + 1) / 2
-				else:
-					# Portrait View
-					var aspect_ratio_scale: float = viewport_height / viewport_width
-					unprojected_position.x = (unprojected_position.x + 1) / 2
-					unprojected_position.y = (unprojected_position.y / aspect_ratio_scale + 1) / 2
-
-				viewport_position = unprojected_position
-				_set_follow_gizmo_line_position(follow_target.global_position)
 
 		FollowMode.THIRD_PERSON:
 			if not Engine.is_editor_hint():
@@ -1847,8 +1824,9 @@ func _look_at_target_tree_exiting(target: Node) -> void:
 	if look_at_targets.has(target):
 		erase_look_at_targets(target)
 
+
 func _up_target_tree_exiting() -> void:
-	up_target = null
+	_has_up_target = false
 
 
 func _should_look_at_checker() -> void:
