@@ -1124,13 +1124,6 @@ func _process(delta: float) -> void:
 	process_logic(delta)
 
 
-func _notification(what: int) -> void:
-	match(what):
-		NOTIFICATION_EDITOR_PRE_SAVE:
-			if up_target and !up_target.is_inside_tree():
-				up_target = null
-
-
 func process_logic(delta: float) -> void:
 	if _is_active:
 		if _has_noise_resource and _preview_noise:
