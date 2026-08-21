@@ -101,7 +101,7 @@ func _enter_tree() -> void:
 	ProjectSettings.set_initial_value(_settings_show_jitter_tips, true)
 	ProjectSettings.set_as_basic(_settings_show_jitter_tips, true)
 	
-	## Setting for enabling / disabling mixed Follow + LookAt modes in the output
+	## Setting for enabling / disabling mixed Follow + LookAt mode tips in the output
 	if not ProjectSettings.has_setting(_settings_show_mixed_mode_tips):
 		ProjectSettings.set_setting(_settings_show_mixed_mode_tips, true)
 		ProjectSettings
